@@ -23,20 +23,19 @@ A beta version of a shinyApp to plot data as barplots and have it exported as ed
 
 #### Known issues (to be fixed):
 
-- pptx export does not work with individual data points
 - The non-numerical data can only be modified *after* the numerical data has been modified
 - Not possible to add a column 'on the fly' because of preset column types
 
 #### Fixes/To-do's:
 
-- [ ] Fix pptx export 
+- [x] Fix pptx export 
 - [ ] Investigate order of numerica/non-numerical editing options
 - [ ] Investigate specifying column types interactively so that adding columns is possible
 
 #### Enhancements:
 
-- [ ] Allow svg/eps export
-- [ ] Allow Setting y-axis scale
+- [x] Allow svg/eps export
+- [x] Allow Setting y-axis scale
 - [ ] Add other types of plotting options to same data. 
     - Violin plots
     - Whisker plots

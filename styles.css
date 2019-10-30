@@ -40,3 +40,9 @@ body {
 #testplot {
     float: right;
 }
+
+.buttonsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
