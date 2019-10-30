@@ -22,6 +22,16 @@ library(export)
 ui = fluidPage(
     includeCSS("styles.css"),
     titlePanel('Generate barplots from input'),
+    tags$div(class = 'textboxTitle',
+        tags$h4('With this tool you can generate plots that you can export and edit as pdf or pptx. You can also export them as uneditable png. The tool generates a random dataset every time so that you can visualize the aspect of the final plot. 
+        You can also copy-paste your dataset from excel.
+        Note that you can also add rows if you have more datapoints'),
+        tags$div(
+            HTML(
+                'The project is developed by <a href = mailto:eva.benito@achucarro.org> Eva Benito Garagorri </a> and is freely available <a href="https://github.com/evilla-19/barPlotSierraLab" target = "_black"> here </a>'
+            )
+        )
+    ),
     sidebarLayout(
         sidebarPanel(
             width = 6,
@@ -100,7 +110,8 @@ server = function(output,input){
   output$table = renderRHandsontable({
     rhandsontable(datavalues$data) %>%
         hot_context_menu(allowRowEdit = TRUE, allowColEdit = TRUE) %>%
-        hot_table(highlightCol = TRUE, highlightRow = TRUE)
+        hot_table(highlightCol = TRUE, highlightRow = TRUE) %>%
+        hot_cols(columnSorting = TRUE)
 
   })
   

@@ -18,8 +18,9 @@ A beta version of a shinyApp to plot data as barplots and have it exported as ed
 - **plots live** as you change data
 - **individual** bar or **grouped bar** design
 - **set** the **Y-axis** by default or manually
+- **choose** the Y-Axis **tick mark interval**
 - choose to plot **individual datapoints**
-- allows **pptx** or **png export**. pptx export is vectorial and ungrouppable
+- allows **pptx**, **png** and **pdf (vectorial)**. pptx export is vectorial and ungrouppable
 
 #### Known issues (to be fixed):
 

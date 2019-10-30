@@ -46,3 +46,9 @@ body {
     flex-direction: column;
     align-items: center;
 }
+
+.textboxTitle h4,div {
+    padding-bottom: 4%;
+    line-height: 200%;
+}
+
