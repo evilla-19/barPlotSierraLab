@@ -52,3 +52,6 @@ body {
     line-height: 200%;
 }
 
+.checkbox {
+    padding-bottom: 0px;
+}

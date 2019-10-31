@@ -42,7 +42,8 @@ ui = fluidPage(
             tableOutput('summaryTable'),
             numericInput('maxYforPlot', value = 10, min = 0, max = 100, label = 'Set maximum Y-axis value'),
             numericInput('yAxisTicks', value = 2, min = 1, max = 100, label = 'Set Y-axis tick interval'),
-            checkboxInput("checkbox", label = "Plot individual data points", value = FALSE),
+            checkboxInput("individualDataPoints", label = "Plot individual data points", value = FALSE),
+            checkboxInput("boxPlot", label = "Boxplot", value = FALSE),
             actionButton('setYscale', label = 'Change Y-axis scale'),
             actionButton('setYscaleTicks', label = 'Change Y-axis ticks'),
             # actionButton('resetYscale', label = 'Reset Y-axis scale'),
@@ -64,7 +65,7 @@ ui = fluidPage(
 #######################################
 
 
-plotData = function(data, maxY, yAxisTicks = 2){
+plotData_barplot = function(data, maxY, yAxisTicks = 2){
         ## basic plot
         myplot = ggplot(data, aes(x = Group, y = Average, fill = Treatment)) + 
         geom_bar(width = 0.4, position = position_dodge(width = 0.5), stat = 'identity', color = 'black', size = 0.25, alpha = 0.5) + ## space between bars, black outline
@@ -75,6 +76,7 @@ plotData = function(data, maxY, yAxisTicks = 2){
         scale_y_continuous(expand = c(0, 0), limits = c(0,maxY), breaks = seq(0, maxY, yAxisTicks)) +
         theme(
             axis.text.x = element_text(face = 'bold', colour = 'black', size = 10),
+            axis.text.y = element_text(colour = 'black', size = 8),
             panel.grid.major = element_blank(), panel.grid.minor = element_blank(), ## remove grid
             panel.background = element_blank(), ## remove background
             # legend.position = 'none', ## remove legend
@@ -85,6 +87,31 @@ plotData = function(data, maxY, yAxisTicks = 2){
         return(myplot) 
 
     }
+
+plotData_boxplot = function(data, maxY, yAxisTicks = 2){
+        ## basic plot
+        myplot = ggplot(data, aes(x = Group, y = Measurement, fill = Treatment)) + 
+        # stat_boxplot(geom = 'errorbar', linetype = 1, width = 0.5, aes(col = Treatment)) +
+        geom_boxplot(alpha = 0.5, outlier.shape = 1, width = 0.5, position = position_dodge(width = 0.5)) + 
+        geom_jitter(aes(col = Treatment), position=position_jitterdodge(jitter.width = 0.01, dodge.width = 0.5), size = 0.5)
+        ## remove grid, legend and control axes thickness
+        myplot = myplot + 
+        scale_y_continuous(expand = c(0, 0), limits = c(0, maxY), breaks = seq(0, maxY, yAxisTicks)) +
+        theme(
+            axis.text.x = element_text(face = 'bold', colour = 'black', size = 10),
+            axis.text.y = element_text(colour = 'black', size = 8),
+            panel.grid.major = element_blank(), panel.grid.minor = element_blank(), ## remove grid
+            panel.background = element_blank(), ## remove background
+            # legend.position = 'none', ## remove legend
+            legend.background = element_blank(),
+            axis.line = element_line(colour = "black", size = 0.25),
+            axis.title.x = element_blank()
+            ) ## control color and thickness of axes
+
+        return(myplot) 
+
+    }    
+
 
 
 #######################################
@@ -183,7 +210,7 @@ server = function(output,input){
         #     ymax = max(means)
         #     ymax = ymax + 3
         # }
-        else{
+        else {
             yAxisTicks = 2
         }        
         return(yAxisTicks)
@@ -195,17 +222,22 @@ server = function(output,input){
 
 
     myplot = reactive({
-        if(input$checkbox == FALSE){
-            myplot = plotData(data_summ(), ymax(), yAxisTicks = yAxisTicks())
+        if( (input$individualDataPoints == FALSE) & (input$boxPlot == FALSE) ){
+            myplot = plotData_barplot(data_summ(), ymax(), yAxisTicks = yAxisTicks())
         }
-        else{
-            myplot = plotData(data_summ(), ymax(), yAxisTicks = yAxisTicks())
-            myplot = myplot + geom_jitter(aes(x = Group, y = Measurement),size = 0.5, data = datavalues$data,  position = position_jitterdodge(jitter.width = 0.05, dodge.width = 0.5)) 
+        else if ( (input$individualDataPoints == TRUE) & (input$boxPlot == FALSE) ){
+            myplot = plotData_barplot(data_summ(), ymax(), yAxisTicks = yAxisTicks())
+            myplot = myplot + geom_jitter(aes(x = Group, y = Measurement, col = Treatment), size = 0.5, data = datavalues$data,  position = position_jitterdodge(jitter.width = 0.05, dodge.width = 0.5)) 
+            
+        }
+        else if ( (input$individualDataPoints) == FALSE & (input$boxPlot == TRUE) ){
+            myplot = plotData_boxplot(datavalues$data, ymax(), yAxisTicks = yAxisTicks())
         }
         
         myplot
     })
 
+    isolate(print(datavalues$data))
 
     output$plot = renderPlot({
 
