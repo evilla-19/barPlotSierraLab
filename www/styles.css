@@ -1,0 +1,65 @@
+body {
+    background-color: white;
+    background-image: url(https://cdn.pixabay.com/photo/2019/06/10/11/35/learning-4264032_960_720.jpg);
+    background-size: contain;
+}
+
+.container-fluid {
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: white;
+    padding: 0 40px 20px;
+}
+
+.container-fluid h2 {
+    padding: 5px 20px;
+    margin-bottom: 40px;
+    border-left: 7px #dc1919 solid;
+    background-color: #f9f9f9;
+}
+
+.col-sm-4, .col-sm-8 {
+    text-align: center;
+}
+.col-sm-4 form table {
+    border: 0;
+}
+
+.btn-default {
+    background-color: #dc1919;
+    color: white;
+    border: 1px red solid;
+    font-size: 16px;
+    margin: 10px;
+}
+
+.col-sm-8 #table table {
+    float: left;
+}
+
+#testplot {
+    float: right;
+}
+
+.buttonsContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.textboxTitle h4,div {
+    padding-bottom: 4%;
+    line-height: 200%;
+}
+
+.checkbox {
+    padding-bottom: 0px;
+}
+
+.flexContainer {
+    display: flex;
+}
+
+#graphActionButtons{
+    justify-content: space-around;
+}
