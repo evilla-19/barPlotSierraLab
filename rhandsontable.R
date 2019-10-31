@@ -35,24 +35,40 @@ ui = fluidPage(
     sidebarLayout(
         sidebarPanel(
             width = 6,
-            rHandsontableOutput('table')
+            tags$h4('Input data - you can copy-paste from Excel or Text files.'),
+            rHandsontableOutput('table'),
+            tags$h4('Summary table'),
+            tableOutput('summaryTable'),
         ),
         mainPanel(
             width = 6,
-            tableOutput('summaryTable'),
-            numericInput('maxYforPlot', value = 10, min = 0, max = 100, label = 'Set maximum Y-axis value'),
-            numericInput('yAxisTicks', value = 2, min = 1, max = 100, label = 'Set Y-axis tick interval'),
-            checkboxInput("individualDataPoints", label = "Plot individual data points", value = FALSE),
-            checkboxInput("boxPlot", label = "Boxplot", value = FALSE),
-            actionButton('setYscale', label = 'Change Y-axis scale'),
-            actionButton('setYscaleTicks', label = 'Change Y-axis ticks'),
-            # actionButton('resetYscale', label = 'Reset Y-axis scale'),
+            tags$h4('Output graph'),
             plotOutput(outputId = 'plot'),
-            tags$div(class = 'buttonsContainer',
+            tags$div(class = 'flexContainer', 
+                numericInput('maxYforPlot', value = 10, min = 0, max = 100, label = 'Set maximum Y-axis value'),
+                numericInput('yAxisTicks', value = 2, min = 1, max = 100, label = 'Set Y-axis tick interval'),
+            ),
+            tags$div(class = 'flexContainer', id = 'graphActionButtons',  
+                actionButton('setYscale', label = 'Change Y-axis scale'),
+                actionButton('setYscaleTicks', label = 'Change Y-axis ticks')
+            ),
+            tags$div(class = 'flexContainer',
+                checkboxInput("individualDataPoints", label = "Plot individual data points", value = FALSE),
+                checkboxInput("boxPlot", label = "Boxplot", value = FALSE)
+            ),
+            
+            tags$div(class = 'flexContainer',
                 downloadButton(outputId = 'download_png', label = 'download .png'),
                 downloadButton(outputId = 'download_pdf', label = 'download .pdf'),
                 downloadButton(outputId = 'download_pptx', label = 'download .pptx')
-                )
+                ),
+            tags$div(class = 'individualDataPointsBoxPlotContainer',
+            
+            )
+            
+            
+            # actionButton('resetYscale', label = 'Reset Y-axis scale'),
+            
         )
     )
 )

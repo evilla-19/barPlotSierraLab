@@ -20,6 +20,7 @@ A beta version of a shinyApp to plot data as barplots and have it exported as ed
 - **set** the **Y-axis** by default or manually
 - **choose** the Y-Axis **tick mark interval**
 - choose to plot **individual datapoints**
+- plot a barplot or a whisker plot
 - allows **pptx**, **png** and **pdf (vectorial)**. pptx export is vectorial and ungrouppable
 
 #### Known issues (to be fixed):
@@ -37,9 +38,9 @@ A beta version of a shinyApp to plot data as barplots and have it exported as ed
 
 - [x] Allow svg/eps export
 - [x] Allow Setting y-axis scale
-- [ ] Add other types of plotting options to same data. 
+- [x] Add other types of plotting options to same data. 
     - Violin plots
     - Whisker plots
     - others?
-- [ ] Optimize automatic setting of Y-scale
-- [ ] Prettify website (css)
+- [x] Optimize automatic setting of Y-scale
+- [x] Prettify website (css)
