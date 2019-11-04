@@ -58,8 +58,15 @@ body {
 
 .flexContainer {
     display: flex;
+    justify-content: space-around;
+    padding-top: 20px;
+    padding-bottom: 0px;
 }
 
-#graphActionButtons{
-    justify-content: space-around;
+div {
+    padding-bottom: 2px;
+}
+
+#plot {
+    box-shadow: 10px 10px 5px -10px rgba(0,0,0,0.75);
 }
