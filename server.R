@@ -78,17 +78,21 @@ server = function(output,input){
   ########################################
   ######## initialize data table #########
   ########################################
-  group = sample(c('A', 'B'), 20, replace = TRUE)
-  measurement = sample(20)
-  treatment = sample(c('T', 'noT'), 20, replace = TRUE)
-  df = data.frame(Group = group, Measurement = measurement, Treatment = treatment)
   
-  datavalues = reactiveValues(data = df)
+  DF = data.frame(
+        Group = sample(c('A', 'B'), 20, replace = TRUE),
+        Measurement = sample(20),
+        Treatment = sample(c('T', 'noT'), 20, replace = TRUE)
+  )
+  
+  
+  datavalues = reactiveValues(data = DF)
+
+    # isolate(print(datavalues$data))
 
   ########################################
   ######## convert to RhandsOnTable ######
   ########################################
-  
   
   output$table = renderRHandsontable({
     rhandsontable(datavalues$data) %>%
@@ -106,8 +110,8 @@ server = function(output,input){
     input$table$changes$changes, # observe if any changes to the cells of the rhandontable
     {
         datavalues$data = hot_to_r(input$table) # convert the rhandontable to R data frame object 
-        datavalues$data$Group = as.character(datavalues$data$Group)
-        datavalues$data$Treatment = as.character(datavalues$data$Treatment)
+        # datavalues$data$Group = as.character(datavalues$data$Group)
+        # datavalues$data$Treatment = as.character(datavalues$data$Treatment)
         }
     )
     

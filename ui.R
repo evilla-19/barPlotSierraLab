@@ -25,14 +25,16 @@ ui = fluidPage(
     tags$div(class = 'textboxTitle',
        wellPanel(
         tags$div(
-            HTML('<h5> With this tool you can generate plots that you can export and edit as pdf or pptx </h5> 
+            HTML('<h5> Generate plots that you can export and edit as png, pdf or pptx </h5> 
             Features:
             <br>
             <ul>
                 <li> Copy-paste from an excel/text file </li>
                 <li> Add rows interactively or by right-clicking </li>
                 <li> Reorder columns </li>
+                <li> Customize tick spacing and Y-axis scale </li>
                 <li> Name output file and export as .png, .pdf or .pptx </li>
+                <li> Vectorial output for pdf and pptx </li>
             </ul>
             ')
             ),
@@ -47,10 +49,10 @@ ui = fluidPage(
     ),
     sidebarLayout(
         sidebarPanel(
+            width = 6,
             wellPanel(
                 tags$h4('Input data - you can copy-paste from Excel or Text files.'),
             ),
-            width = 6,
             rHandsontableOutput('table'),
             tags$h4('Summary table'),
             tableOutput('summaryTable'),
