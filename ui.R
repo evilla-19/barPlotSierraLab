@@ -19,7 +19,7 @@ library(shiny)
 #########################
 
 
-ui = fluidPage(
+shinyUI(fluidPage(
     includeCSS("styles.css"),
     titlePanel('Generate barplots from input'),
     tags$div(class = 'textboxTitle',
@@ -100,5 +100,5 @@ ui = fluidPage(
         )
     )
 )
-
+)
 

@@ -18,6 +18,7 @@ library(export)
 #######################################
 
 
+
 plotData_barplot = function(data, maxY, yAxisTicks = 2){
         ## basic plot
         myplot = ggplot(data, aes(x = Group, y = Average, fill = Treatment)) + 
@@ -74,7 +75,9 @@ plotData_boxplot = function(data, maxY, yAxisTicks = 2){
 #######  Server  ######################
 #######################################
 
-server = function(output,input){
+shinyServer(
+
+function(output,input){
   ########################################
   ######## initialize data table #########
   ########################################
@@ -280,5 +283,5 @@ server = function(output,input){
 
 }
 
-
+)
 #  shinyApp(ui = ui, server = server)
