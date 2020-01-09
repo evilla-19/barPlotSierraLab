@@ -3,15 +3,15 @@
 #####################################
 
 library(shiny)
-# library(rhandsontable)
-# library(Rmisc)
-# library(shinyMatrix)
-# library(ggplot2)
-# library(tidyverse)
-# library(officer)
-# library(rvg)
-# library(plyr)
-# library(export)
+library(rhandsontable)
+library(Rmisc)
+library(shinyMatrix)
+library(ggplot2)
+library(tidyverse)
+library(officer)
+library(rvg)
+library(plyr)
+library(export)
 
 
 #########################
