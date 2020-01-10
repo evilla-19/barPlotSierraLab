@@ -19,4 +19,5 @@ install_if_missing = function(p) {
 }
 invisible(sapply(my_packages, install_if_missing))
 
+install.packages("/app/packages/rgl_0.100.30.tar.gz", repos=NULL, type="source")
 install.packages("/app/packages/export_0.2.2.tar.gz", repos=NULL, type="source")
