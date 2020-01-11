@@ -21,7 +21,7 @@ library(plyr)
 
 
 shinyUI(fluidPage(
-    includeCSS("styles.css"),
+    # includeCSS("styles.css"),
     titlePanel('Generate barplots from input'),
     tags$div(class = 'textboxTitle',
        wellPanel(
@@ -45,8 +45,6 @@ shinyUI(fluidPage(
             )
         )
        )
-       
-
     ),
     sidebarLayout(
         sidebarPanel(
@@ -54,9 +52,9 @@ shinyUI(fluidPage(
             wellPanel(
                 tags$h4('Input data - you can copy-paste from Excel or Text files.')
             ),
-            rHandsontableOutput('table'),
+            # rHandsontableOutput('table'),
             tags$h4('Summary table'),
-            tableOutput('summaryTable'),
+            tableOutput('summaryTable')
         ),
         mainPanel(
             width = 6,
@@ -68,7 +66,7 @@ shinyUI(fluidPage(
 
                 tags$div(class = 'flexContainer', 
                     numericInput('maxYforPlot', value = 10, min = 0, max = 100, label = 'Set maximum Y-axis value'),
-                    numericInput('yAxisTicks', value = 2, min = 1, max = 100, label = 'Set Y-axis tick interval'),
+                    numericInput('yAxisTicks', value = 2, min = 1, max = 100, label = 'Set Y-axis tick interval')
                 ),
             
                 tags$div(class = 'flexContainer', id = 'graphActionButtons',  
@@ -91,13 +89,10 @@ shinyUI(fluidPage(
                     downloadButton(outputId = 'download_pptx', label = 'download .pptx')
                     ),
                 tags$div(class = 'individualDataPointsBoxPlotContainer'
-                ),
+                )
             
             )
-            
-            
-            # actionButton('resetYscale', label = 'Reset Y-axis scale'),
-            
+            # actionButton('resetYscale', label = 'Reset Y-axis scale'), 
         )
     )
 )
