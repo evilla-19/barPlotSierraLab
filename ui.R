@@ -21,7 +21,7 @@ library(plyr)
 
 
 shinyUI(fluidPage(
-    # includeCSS("styles.css"),
+    includeCSS("styles.css"),
     titlePanel('Generate barplots from input'),
     tags$div(class = 'textboxTitle',
        wellPanel(
@@ -52,7 +52,7 @@ shinyUI(fluidPage(
             wellPanel(
                 tags$h4('Input data - you can copy-paste from Excel or Text files.')
             ),
-            # rHandsontableOutput('table'),
+            rHandsontableOutput('table'),
             tags$h4('Summary table'),
             tableOutput('summaryTable')
         ),
