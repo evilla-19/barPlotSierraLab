@@ -19,6 +19,7 @@ library(plyr)
 #########################
 
 
+
 shinyUI(fluidPage(
     includeCSS("styles.css"),
     titlePanel('Generate barplots from input'),
@@ -43,7 +44,7 @@ shinyUI(fluidPage(
                 '<small> The project is developed by <a href = mailto:eva.benito@achucarro.org> Eva Benito Garagorri </a> and is freely available <a href="https://github.com/evilla-19/barPlotSierraLab" target = "_black"> here </a> </small>'
             )
         )
-       ),
+       )
        
 
     ),
@@ -51,7 +52,7 @@ shinyUI(fluidPage(
         sidebarPanel(
             width = 6,
             wellPanel(
-                tags$h4('Input data - you can copy-paste from Excel or Text files.'),
+                tags$h4('Input data - you can copy-paste from Excel or Text files.')
             ),
             rHandsontableOutput('table'),
             tags$h4('Summary table'),
@@ -78,7 +79,7 @@ shinyUI(fluidPage(
                 tags$div(class = 'flexContainer',
                     checkboxInput("individualDataPoints", label = "Plot individual data points", value = FALSE),
                     checkboxInput("boxPlot", label = "Boxplot", value = FALSE)
-                ),
+                )
             ),
             
             wellPanel(    
