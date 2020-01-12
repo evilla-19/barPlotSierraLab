@@ -11,7 +11,7 @@ library(tidyverse)
 library(officer)
 library(rvg)
 library(plyr)
-# library(export)
+library(export)
 
 #######################################
 #######  helper functions   ###########
@@ -83,7 +83,7 @@ function(output,input){
   ########################################
   
   DF = data.frame(
-        Group = sample(c('A', 'B'), 20, replace = TRUE),
+        Group = sample(c('A', 'B', 'C', 'D'), 20, replace = TRUE),
         Measurement = sample(20),
         Treatment = sample(c('T', 'noT'), 20, replace = TRUE)
   )
