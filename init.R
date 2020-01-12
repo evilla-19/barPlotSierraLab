@@ -5,7 +5,7 @@
 # Example R code to install packages if not already installed
 #
 
-my_packages = c('shiny','rhandsontable','Rmisc','shinyMatrix','ggplot2','tidyverse','officer','rvg','plyr','export', 'devtools')
+my_packages = c('shiny','rhandsontable','Rmisc','ggplot2','tidyverse','officer','rvg','plyr','export', 'devtools', 'Cairo')
 
 ###########################################################
 
