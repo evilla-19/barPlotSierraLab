@@ -2,4 +2,4 @@ libcgal-dev
 libglu1-mesa-dev
 libglu1-mesa-dev
 libx11-dev
-
+libgl1-mesa-glx
