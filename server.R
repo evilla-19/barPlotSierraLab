@@ -75,6 +75,9 @@ plotData_boxplot = function(data, maxY, yAxisTicks = 2){
 #######  Server  ######################
 #######################################
 
+ options(bitmapType='cairo')
+
+
 shinyServer(
 
 function(output,input){
