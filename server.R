@@ -11,9 +11,9 @@ library(tidyverse)
 library(officer)
 library(rvg)
 library(plyr)
-options(rgl.useNULL=TRUE)
-library(shinyRGL)
-library(export)
+# options(rgl.useNULL=TRUE)
+# library(shinyRGL)
+# library(export)
 
 #######################################
 #######  helper functions   ###########
