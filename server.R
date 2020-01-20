@@ -12,6 +12,7 @@ library(officer)
 library(rvg)
 library(plyr)
 options(rgl.useNULL=TRUE)
+library(shinyRGL)
 library(export)
 
 #######################################
