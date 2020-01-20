@@ -11,7 +11,8 @@ library(tidyverse)
 library(officer)
 library(rvg)
 library(plyr)
-# library(export)
+options(rgl.useNULL=TRUE)
+library(export)
 
 
 #########################
