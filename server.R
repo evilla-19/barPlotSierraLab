@@ -117,7 +117,6 @@ function(output,input){
     observeEvent(
     input$table$changes$changes, # observe if any changes to the cells of the rhandontable
     {
-        datavalues$data$Measurement = 
         datavalues$data = hot_to_r(input$table) # convert the rhandontable to R data frame object 
         datavalues$data$Group = as.character(datavalues$data$Group)
         datavalues$data$Treatment = as.character(datavalues$data$Treatment)
