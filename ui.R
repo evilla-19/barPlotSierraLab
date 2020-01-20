@@ -11,7 +11,7 @@ library(tidyverse)
 library(officer)
 library(rvg)
 library(plyr)
-library(export)
+# library(export)
 
 
 #########################
