@@ -12,7 +12,7 @@ library(officer)
 library(rvg)
 library(plyr)
 # options(rgl.useNULL=TRUE)
-# library(export)
+library(export)
 
 
 #########################
@@ -25,7 +25,9 @@ shinyUI(fluidPage(
     includeCSS("styles.css"),
     titlePanel('Generate barplots from input'),
     tags$div(class = 'textboxTitle',
-       wellPanel(
+    fluidRow(
+        column(width = 6,
+        wellPanel(
         tags$div(
             HTML('<h5> Generate plots that you can export and edit as png, pdf or pptx </h5> 
             Features:
@@ -43,16 +45,30 @@ shinyUI(fluidPage(
             tags$div(
                HTML(
                 '<small> The project is developed by <a href = mailto:eva.benito@achucarro.org> Eva Benito Garagorri </a> and is freely available <a href="https://github.com/evilla-19/barPlotSierraLab" target = "_black"> here </a> </small>'
-            )
+                    )
+                    )   
         )
-       )
     ),
+    column(
+        width = 6,
+        tags$iframe(width="560", height="315", src="https://youtu.be/vFxJRr-jIv8", frameborder="0", allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture", allowfullscreen=NA)
+        )  
+
+    )
+    
+
+
+       ),
     sidebarLayout(
         sidebarPanel(
             width = 6,
             wellPanel(
-                tags$h4('Input data - you can copy-paste from Excel or Text files.')
+                tags$h4('Input data - you can copy-paste from Excel or Text files.'),
+                tags$div(
+                    tags$p('Important note: you cannot delete columns. If you do not have several treatment, simply use the same treatment (e.g. T1) for all rows. That will generate a simple barplot')
+                )
             ),
+            # numericInput('howManyRows', value = 10, min = 1, max = 1000, label = 'How many rows do you need?'),
             rHandsontableOutput('table'),
             tags$h4('Summary table'),
             tableOutput('summaryTable')
@@ -69,7 +85,7 @@ shinyUI(fluidPage(
                     numericInput('maxYforPlot', value = 10, min = 0, max = 100, label = 'Set maximum Y-axis value'),
                     numericInput('yAxisTicks', value = 2, min = 1, max = 100, label = 'Set Y-axis tick interval')
                 ),
-            
+
                 tags$div(class = 'flexContainer', id = 'graphActionButtons',  
                     actionButton('setYscale', label = 'Change Y-axis scale'),
                     actionButton('setYscaleTicks', label = 'Change Y-axis ticks')
@@ -92,6 +108,12 @@ shinyUI(fluidPage(
                 tags$div(class = 'individualDataPointsBoxPlotContainer'
                 )
             
+            ),
+            wellPanel(
+                actionButton('bootstrap', label = 'Perform bootstrap test'),
+                textInput('dataset_x', 'Choose first dataset'),
+                textInput('dataset_y', 'Choose second dataset'),
+                textOutput('bootstrap_test')
             )
             # actionButton('resetYscale', label = 'Reset Y-axis scale'), 
         )

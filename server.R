@@ -13,7 +13,8 @@ library(rvg)
 library(plyr)
 # options(rgl.useNULL=TRUE)
 # library(shinyRGL)
-# library(export)
+library(export)
+library(MKinfer)
 
 #######################################
 #######  helper functions   ###########
@@ -24,7 +25,7 @@ library(plyr)
 plotData_barplot = function(data, maxY, yAxisTicks = 2){
         ## basic plot
         myplot = ggplot(data, aes(x = Group, y = Average, fill = Treatment)) + 
-        scale_fill_manual(values = c('#000501', '#ff0318')) +
+        # scale_fill_manual(values = c('#000501', '#ff0318')) +
         geom_bar(width = 0.4, position = position_dodge(width = 0.5), stat = 'identity', color = '#000501', size = 0.25, alpha = 0.5) + ## space between bars, black outline
         geom_errorbar(aes(ymin = Average , ymax = Average + se), width = 0.1, position = position_dodge(width = 0.5), size = 0.25) ## errorbars going up only
 
@@ -48,8 +49,8 @@ plotData_barplot = function(data, maxY, yAxisTicks = 2){
 plotData_boxplot = function(data, maxY, yAxisTicks = 2){
         ## basic plot
         myplot = ggplot(data, aes(x = Group, y = Measurement, fill = Treatment)) + 
-        scale_fill_manual(values = c('#000501', '#ff0318')) + 
-        scale_color_manual(values = c('#000501', '#ff0318')) + 
+        # scale_fill_manual(values = c('#000501', '#ff0318')) + 
+        # scale_color_manual(values = c('#000501', '#ff0318')) + 
         # stat_boxplot(geom = 'errorbar', linetype = 1, width = 0.5, aes(col = Treatment)) +
         geom_boxplot(alpha = 0.5, outlier.shape = 1, width = 0.5, position = position_dodge(width = 0.75)) + 
         geom_jitter(aes(col = Treatment), position=position_jitterdodge(jitter.width = 0.01, dodge.width = 0.75), size = 0.5)
@@ -77,26 +78,48 @@ plotData_boxplot = function(data, maxY, yAxisTicks = 2){
 #######  Server  ######################
 #######################################
 
- options(bitmapType='cairo')
+options(bitmapType='cairo')
 
 
 shinyServer(
 
 function(output,input){
-  ########################################
-  ######## initialize data table #########
-  ########################################
-  
-  DF = data.frame(
-        Group = sample(c('A', 'B', 'C', 'D'), 20, replace = TRUE),
-        Measurement = sample(20)/1.00,
-        Treatment = sample(c('T', 'noT'), 20, replace = TRUE)
-  )
   
   
-  datavalues = reactiveValues(data = DF)
+########################################
+######## initialize data table #########
+########################################
+  
 
-    # isolate(print(datavalues$data))
+# generateDF =  reactive({
+#         data.frame(
+#         Group = sample(c('A', 'B', 'C', 'D'), input$howManyRows, replace = TRUE),
+#         Measurement = sample(input$howManyRows/1.00),
+#         Treatment = sample(c('T1', 'T2', 'T3', 'T4'), input$howManyRows, replace = TRUE)
+#         )
+# })
+
+# isolate(print(generateDF()))
+
+DF = 
+        data.frame(
+        Group = sample(c('A', 'B', 'C', 'D'), 20, replace = TRUE),
+        Measurement = sample(20/1.00),
+        Treatment = sample(c('T1', 'T2', 'T3', 'T4'), 20, replace = TRUE)
+    )
+
+    
+  
+
+# DF = generateDF()
+
+
+datavalues = reactiveValues(data = DF)
+
+    # isolate(print(
+        # datavalues$data
+        # datavalues$data[datavalues$data$Group == 'A',c(1,2)]
+        # ))
 
   ########################################
   ######## convert to RhandsOnTable ######
@@ -190,6 +213,7 @@ function(output,input){
         return(yAxisTicks)
     })
 
+
     ############################################################################################
     ######## plot reactively based on user selection of individual data points or not ########
     ############################################################################################
@@ -202,7 +226,7 @@ function(output,input){
         else if ( (input$individualDataPoints == TRUE) & (input$boxPlot == FALSE) ){
             myplot = plotData_barplot(data_summ(), ymax(), yAxisTicks = yAxisTicks())
             myplot = myplot + geom_jitter(aes(x = Group, y = Measurement, col = Treatment), size = 0.5, data = datavalues$data,  position = position_jitterdodge(jitter.width = 0.05, dodge.width = 0.5)) 
-            myplot = myplot + scale_color_manual(values = c('#000501', '#ff0318'))
+            # myplot = myplot + scale_color_manual(values = c('#000501', '#ff0318'))
             
         }
         else if ( (input$individualDataPoints) == FALSE & (input$boxPlot == TRUE) ){
@@ -219,9 +243,6 @@ function(output,input){
 
         myplot()
     })
-
-
-    
 
     # observeEvent(input$setYscale, {
     #         ymax = input$maxYforPlot
@@ -285,6 +306,56 @@ function(output,input){
             graph2ppt(x = myplot(), file = file , width = 3.0, height = 1.5, paper = 'A4', orient = 'portrait', center = FALSE, offx = 1, offy = 1)
         }
         )
+
+    ################################
+    ######## bootstrap test ########
+    ################################
+
+
+    # isolate(print(
+    #     # datavalues$data
+    #     datavalues$data[datavalues$data$Group == 'A' & (datavalues$data$Treatment == 'T' | datavalues$data$Treatment == 'noT'),2]
+    #     ))
+
+
+    testout = 
+        reactive({
+            x_data = datavalues$data[datavalues$data$Group == input$dataset_x,2]
+            y_data = datavalues$data[datavalues$data$Group == input$dataset_y,2]        
+            if(input$bootstrap){    
+                bs = boot.t.test(x = x_data, y = y_data)
+                return(bs)
+            }
+            })
+
+
+
+
+output$bootstrap_test = renderPrint({
+    if(input$bootstrap){    
+        vals = testout()
+        boot_pval = round(vals$boot.p.value,3)
+        meanOfx = vals$estimate[1]
+        meanOfy = vals$estimate[2]
+        t_pval = round(vals$p.value,3)
+        cat(
+            paste(
+                'Result of Bootstrap test: ', boot_pval, '\n',
+                'Result of conventional t-test: ', t_pval, '\n',
+                'Mean of dataset 1: ', meanOfx, '\n',
+                'Mean of dataset 2: ', meanOfy
+            )
+            )
+    }
+    })
+
+
+    # output$bootstrap_test = renderText({
+    #         bs = boot.t.test(x = 1:10, y = 20:30)
+    #         paste0('p-value from bootstrap test: ', bs$boot.p.value)
+    #     })
+    
+    
 
 }
 

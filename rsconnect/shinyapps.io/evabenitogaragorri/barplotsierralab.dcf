@@ -5,6 +5,6 @@ account: evabenitogaragorri
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 1406082
-bundleId: 2554666
+bundleId: 3043856
 url: https://evabenitogaragorri.shinyapps.io/barplotsierralab/
-when: 1572534103.11
+when: 1587470780.27502
