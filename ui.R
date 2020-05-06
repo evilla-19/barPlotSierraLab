@@ -51,7 +51,7 @@ shinyUI(fluidPage(
     ),
     column(
         width = 6,
-        tags$iframe(width="560", height="315", src="https://youtu.be/vFxJRr-jIv8", frameborder="0", allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture", allowfullscreen=NA)
+        tags$iframe(width="560", height="315", src="https://youtube.com/embed/vFxJRr-jIv8", frameborder="0", allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture", allowfullscreen=NA)
         )  
 
     )
